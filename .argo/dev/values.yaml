@@ -1,5 +1,5 @@
 http-api:
-  appVersion: test01
+  appVersion: test02
   autoscaling:
     enabled: false
   configMapData:
