@@ -1,0 +1,54 @@
+http-api:
+  appVersion: test06
+  autoscaling:
+    enabled: false
+  configMapData:
+    active_spring_profile: dev
+    email_base_url: https://group-digital-enrolment-dev.nn.r.appspot.com
+    gde_api_http_logging_enabled: 'true'
+    gde_api_swagger_enabled: 'true'
+    gde_flyway_username: gdemig
+    gde_jdbc_url: jdbc:mysql://kgnmysqldv01.empire.ca:3306/gde
+    gde_jdbc_username: gdeapp
+    oauth_auth_audience: api://empire.ca/group-digital-enrolment
+    oauth_auth_server: https://login-dev.empire.ca/
+    sumo_collection_category: apps/group-digital-enrolment-api/dev
+  image:
+    pullPolicy: Always
+    repository: gcr.io/empire-stage-registry/group-digital-enrolment-api/dev
+  ingress:
+    enabled: true
+    hosts:
+    - host: web7.empire.ca
+      paths:
+      - path: /group-digital-enrolment-api
+        pathType: Prefix
+    tls:
+    - hosts:
+      - web7.empire.ca
+      secretName: wildcard-empire-ca
+  livenessProbe:
+    httpGet:
+      path: /group-digital-enrolment-api/actuator/health
+      port: 8080
+  readinessProbe:
+    httpGet:
+      path: /group-digital-enrolment-api/actuator/health
+      port: 8080
+  requiredAnnotations:
+    businessUnit: group
+    ownerEmail: bradley.bertrim@empire.ca
+  resources:
+    limits:
+      cpu: 2
+      memory: 2048Mi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  sealedSecrets:
+    gde_flyway_password: AgA0CqkU7ufnz7cS6G03oROiKquyyxtc1g8xpEN7/TiLU6Cy1KNnWfE7JEBllObc8xAOoOQ5N8g2eBXxMguhK4DB54Mhg4kxg0+o4pAlL7YcRh/1IDvHE/NF614hbPEC9UYMnkQ6OAFDCBEoelrLXKQo3V83wsOBFnjCVqzuB2d6twnawbHjwxtTKCVcDWnhuYaaxzrOUmD2+AgC1eD/89oCkpeGyKmcL17rsnXkIUo8667NoGg7D5qXkkuBUjGuFwPQ4EA3UhokDpZjulzZ5ywbGYwPtBJEQZu3A7Qan0fUMRt+hNbxlTJev7aRsH/nqhrd1AXVK66xjWX7N4przmI+POhnmxj1AIe+f+CL5ObwcRrEJTq56DB/qmKsP7O/urBXVCnuOv2jhJ37Nne3fXlDWfq6ZEPXwwj4/S3T5eD8U8BYphVR/Y3104YjUL8Yr8ce92TVqYCStF0kPNAZFQEpA1rcsngnoY0lSfG/mslbPUSa9+iqmeGdFZIS1Na/9CdsmqfFsdUG5hEvpx6P9jMT/b7qplhegY0HmjYvLVnZYJyGU7Y6r3OG8yA0fzavYNEltZpUD71D0Qa/J8mFJ4K8wrfLd3B4Gp9+b9nnHkvgFD7ZSYv31M45xQFBS2tW17LbYNyjWfBWa8Swrg+aqsnqSVG1zr+9JpO1hGeh4tWwijDx57IEv7AxP/D9hAMrcG7p3ZIlY2k3KIAu+cU=
+    gde_jdbc_password: AgCnMawBYuATu8Wp+OygiIzkPvUvAyfj67YTMX749Jgjjdrs+4hWq23ueZvT6qETaNFK4O6fAOW8tmdhK0AuWXeQt4jDZhNSwsNIrpWepRNLGS8+12aJycC6EKSk48Q7BMH/oTy3MC38cvzVpep2VO2ANL/oMkJ0xiO7HVC0kaUGCpBRf1Ifb4JsMpa2C1N5qtJ5fyxB0tmwAuNhzS7PyNvF1x3GOPMCBXBg0l+qWQcWqEPp5BeZIRCv2PitkbsublMGTDV35bM7JUyngxcfqMZhVdUpryQpuQOOg1XQiGmMe6/3LQJsBdjpRNCpNw9rHkzTRYhBJKBW1x+wcnFTRTJ0Ma2ap6evHPvFBBV1G0KpE+eNRt5S+8GiSpt1mmkFjexv9H4kw0Sp8bBC+L2ehMtbnR1TXdD08NX8/nHcNlUfzlgFvBK5z4wognVo8VgKnmkFnH9yjQtPO+EKBuc5j1fzvKnG2EHAn8K0gJ//kg7/z6AwOwc5VyZowFQFsKfa2l9w0oqUcXUlM+ET2UvFW6GzPp3ntnrNJxN/IZJuFtEhxuZHy/khquqB3jjYpR9n6ewB4zfVVOyXIguKMiGmU3iAT1Aa3AZnS9p0R5EHygrcs6YpmFPSzcY74pztEimEq/h3VzH0IaKzLDKiWO/qwGPZOGR+gLDjV98TzYHUCsWAWJ4VpDfBx8pP29bzak0BsdzxsxlBsuf+ebBme74=
+    sendgrid_key: AgBe8jpffE10IiO4sPa92PkxK2e9C1rbALY6AIzdR7avDpQHF/XItsTHIuwUYE06J5C8YD7O2Hxvgwo+8On4OMd1Ak829IMg/IVUtLgH290dgRxjji158366XZ1crU57E7Dm/kOZfxYkpDOFj1lhfGwt4n8y01Bu7ZcU9wj4TI5xTdIQWFBu4PedxLpk/7h8W1xp1TT1lGCluA7d0ns7BUJmzXz0X0kXs9QEfOsCygOWPSgj1kurxNyJI8GsbNL0R0RbYLIPiZq1z1tBrroonqDVDXcOY1lpuGZIvRy0RiS2mXBmyMsp4xqzOkloxNIwqUNfv1qhW2c4TRSjJI72Z5lVLJ8Xwuf+8F+Vbq4pMwHNCGttMIc/I+4CFnQnIHV2hQLT9s7nO4OAEZzf+f0MKpHuW5YKxAuHJRhaJraewEVexH0ZSXuZbH76AQOx3+9LtN+IcaJqEk1+MquJYr/UD8FxftaLP6M1B+uB9YSoNymhDmAI0XDW6BKlVYgdR+ho2vHVNZzWTHCqYIs52B0ey98ho+wiRJptZhuAJDESCrz5nxZhepIo0V7BL7apCZBzC/GDXB83qrgOD/eUVgdCZbtngRhadJuaEaiT17By6n7eIeKhjDLMWVWy6TySPmBLSmWkhVy7TypUpSFzLTED8qgELr63mPw1CcqiWLipekLqwZ/rZj+zMx2t94ILa2jYAQjoR3UFWAAa85Dx6gKpa6JY/UH9BjpnjCNjpvW8Fve4IyMM1CrcrKrR4oSVWu7VgDgz4E9/cIJLKiifDYRLWFoTyJ+aQM4=
+    sumo_collection_endpoint: AgA+brNAtJwe8KHEmuoDWyFuZ1F70OSbrIgpxZFIrLqfgH0o0QGlaEgTdGWacJcnCnn0Xtvj6CuySCBOLnt8sJzfAg1JF4P7sIrPavsdGB/Vgw+SVrbw+NxFYMioefDlgspuNAexI9g4G+jEYdKX1Z1+z5F3upQkGxqfotZYgvUxxAPum/6Um3l5pZDVvuaDUHGTqGdJcWvPyNjSPzgmET8wJ9DTpHn4hsy9JNMNT7tmUl42dXa0dRBGpqoPxBEdddmYxC2h4Gcw2pYndq7Lp+6rHnh1aORtopaSFYfC3Y/JRlj+MB+AjSVyQCq3tsQrDb/TUbBTbS9XN9EfxuaTtKSev2I3jaPCimpuijlsIW+Ev0D3MgGON8icp+4ugng7gtkeOR6Du3wvUSLydetMN5ueuR0j5nsgQPlFvnDA6bGG1NYQJpZJjML+Ys4KwXfWTJe1aqvcK0iFDViRUq72fG8ri1R0WU0YVSeA6nnZkVcE5RPTJp9haqlLxofIxgV6YXz5uu3HBb+XrLpiE1xpHK7XAlmcbohFg7kjGJ9HnkmsrqzTJfjNHCf4CUQL+t4jgux6L+5PztGuzX8+q8EJajtyyio+0lU0nqz+Z2QW27tmQzsU54XRrMwpl8ynAvRU8cW6THHE6UjbpEYtUCrjWVMgv7ZkBlcricWOgrqFwISGHduxg4YXAjbmaLBQu/n+OlaWbajs/5PPskAkMSn6KHOWiz1CKEBSE7/yUOWDUZQsfHY3dL1EncgbuJCH/HuEP9ci/fa7jlrlq/jpiEsPdzo5VWmKYRmaUx8RZda4XNfzzTUuewxBcsM8XgnPZXHPWH86mJ5QqXQ8UX+1hv0QfYvtZ1G+kO3Nm1/LnqpCzzJR9l95mQZ2iSWxHloT7qvxXf9vAA0d+DAXMu87RyiDfT7KAqQjlivhawddOjL3ukfkQxSst7tD2107
+  service:
+    port: 8080
